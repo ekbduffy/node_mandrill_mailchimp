@@ -4,6 +4,9 @@ var Cacheman = require('cacheman');
 var cache = new Cacheman({ ttl: 1000 });
 
 var router = require("express").Router();
+var sender = require('../sender.js');
+
+
 
 
 router.get('/',function(req,res){
@@ -16,6 +19,9 @@ router.get('/new',function(req,res){
 
 router.post('/new',function(req,res){
     createSending(req,res);
+});
+router.get('/run/:id',function(req,res){
+    Send(req,res);
 });
 
 router.get('/details/:id',function(req,res){
@@ -55,5 +61,30 @@ function sendingDetails(req,res){
             }            
                 return  res.render('sendings/details',{req:req,err:err,sending:sending});
         });
+    });        
+}
+
+
+function Send(req,res){
+    mysql.getConnection(function(error,db){
+        if(error){
+            console.log(error);
+            return  res.json({err:error.message});
+        }
+            
+        db.query('SELECT l.*, s.campaign FROM sending s LEFT JOIN listemails l ON (l.listid = s.list) WHERE s.id =?  AND l.subscribed = 1 AND l.email NOT IN (SELECT email FROM listemails WHERE listid = s.excludeList)', [req.params.id],function(error, emails){            
+            db.release();
+            if(error){                
+                err = error.message;
+                return  res.json({err:err});
+            }            
+            else{
+                emails.forEach(function(email){                    
+                    sender.sendTemplate(email);                       
+                });
+                return  res.json({state:'send started'});
+            }
+                
+        });            
     });        
 }

@@ -47,9 +47,9 @@
     </section>
 {% endblock %}
 {% block additionalJS %}
-$('#sendbutt').on('click', function (e) {
-
-     $.ajax()
-
-})
+<script>
+$('#sendbutt').on('click', function (e) {   
+     $.ajax('/sending/run/{{sending.id}}');
+});
+</script>
 {% endblock %}
