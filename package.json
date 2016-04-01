@@ -1,0 +1,28 @@
+{
+  "name": "node_mandrill_mailchimp",
+  "version": "0.0.1",
+  "description": "API vs API vs frontend",
+  "main": "server.js",
+  "dependencies": {
+    "async": "^1.5.2",
+    "basic-auth": "^1.0.3",
+    "body-parser": "^1.15.0",
+    "cacheman": "^2.2.1",
+    "mandrill-api": "^1.0.45",
+    "express": "^4.13.4",
+    "swig": "^1.4.2",
+    "mysql-utilities": "^1.0.8",
+    "mailchimp-v3": "^1.0.1",
+    "mysql": "^2.10.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ekbduffy/node_mandrill_mailchimp"
+  },
+  "author": "ekbduffy"
+}
