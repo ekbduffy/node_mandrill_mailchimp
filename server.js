@@ -8,7 +8,9 @@ var mandrill = require('mandrill-api/mandrill');
 var mysql = require('./db.js');
 var bodyParser = require('body-parser');
 
-var app = express();
+
+var app = module.exports.app = exports.app = express();
+
 app.engine('swig', swig.renderFile);
 
 

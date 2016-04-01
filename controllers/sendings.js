@@ -48,7 +48,7 @@ function sendingDetails(req,res){
     mysql.getConnection(function(error,db){
         if(error)
             console.log(error);	
-        db.queryRow('SELECT sending.*,sending.created,camp.enname,li.name AS liname,exli.name AS exliname FROM sending LEFT JOIN LIST li ON (li.id = sending.list) LEFT JOIN LIST exli ON (exli.id = sending.excludeList) LEFT JOIN campaign camp ON (camp.id = sending.campaign) where sending.id =?', [req.params.id],function(error, sending){
+        db.queryRow('SELECT s.*,s.created,camp.enname,li.name AS liname,exli.name AS exliname, (SELECT COUNT(*) FROM sendingdata WHERE sendingID = s.id)  AS datanum, (SELECT COUNT(*) FROM listemails WHERE listid = li.id)  AS listnum FROM sending s LEFT JOIN LIST li ON (li.id = s.list) LEFT JOIN LIST exli ON (exli.id = s.excludeList) LEFT JOIN campaign camp ON (camp.id = s.campaign) WHERE s.id =?', [req.params.id],function(error, sending){
             db.release();
             if(error){
                 err = error.message;
